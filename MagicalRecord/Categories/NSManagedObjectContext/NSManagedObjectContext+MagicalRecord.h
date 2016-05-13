@@ -20,6 +20,18 @@
  */
 + (void) MR_initializeDefaultContextWithCoordinator:(MR_nonnull NSPersistentStoreCoordinator *)coordinator;
 
+
+/**
+ Initializes MagicalRecord's main queue context ( MR_defaultContext ) as as well as backgorund context ( MR_rootSavingContext ),
+ both directly connnected to the provided persistent store coordinator. All changes made in the backgorund
+ context are merged into the default context using NSManagedObjectContextDidSaveNotification. The default context should
+ only be used for fetching data and observing changes, all write operations should be performed on the backgorund
+ context.
+ 
+ @param coordinator Persistent Store Coordinator
+ */
++ (void) MR_initializeIndependentMainAndBackgroundContextsWithCoordinator:(MR_nonnull NSPersistentStoreCoordinator *)coordinator;
+
 #pragma mark - Default Contexts
 /**
  Root context responsible for sending changes to the main persistent store coordinator that will be saved to disk.

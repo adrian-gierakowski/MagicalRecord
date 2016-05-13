@@ -15,6 +15,9 @@
 + (void) setupCoreDataStackWithInMemoryStore;
 + (void) setupAutoMigratingCoreDataStack;
 
++ (void) setupAutoMigratingCoreDataStackWithIndependentMainAndBackgroundContexts;
++ (void) setupCoreDataStackWithInMemoryStoreAndIndependentMainAndBackgroundContexts;
+
 + (void) setupCoreDataStackWithStoreNamed:(MR_nonnull NSString *)storeName;
 + (void) setupCoreDataStackWithAutoMigratingSqliteStoreNamed:(MR_nonnull NSString *)storeName;
 

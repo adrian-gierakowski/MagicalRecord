@@ -24,7 +24,7 @@ static id MagicalRecordUbiquitySetupNotificationObserver;
 
 #pragma mark - Setup
 
-+ (void) MR_initializeDefaultContextWithCoordinator:(NSPersistentStoreCoordinator *)coordinator;
++ (void) MR_initializeDefaultContextWithCoordinator:(NSPersistentStoreCoordinator *)coordinator
 {
     NSAssert(coordinator, @"Provided coordinator cannot be nil!");
     if (MagicalRecordDefaultContext == nil)
@@ -37,6 +37,21 @@ static id MagicalRecordUbiquitySetupNotificationObserver;
 
         [defaultContext setParentContext:rootContext];
     }
+}
+
++ (void) MR_initializeIndependentMainAndBackgroundContextsWithCoordinator:(MR_nonnull NSPersistentStoreCoordinator *)coordinator
+{
+  NSAssert(coordinator, @"Provided coordinator cannot be nil!");
+  if (MagicalRecordDefaultContext == nil)
+  {
+    NSManagedObjectContext *backgroundContext = [self MR_contextWithStoreCoordinator:coordinator];
+    [self MR_setRootSavingContext:backgroundContext];
+    
+    NSManagedObjectContext *defaultContext = [self MR_newMainQueueContext];
+    [self MR_setDefaultContext:defaultContext];
+    
+    [defaultContext setPersistentStoreCoordinator:coordinator];
+  }
 }
 
 #pragma mark - Default Contexts
